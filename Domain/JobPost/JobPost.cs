@@ -12,13 +12,18 @@ namespace Domain.JobPost
     public class JobPost
     {
         public int Id { get; set; }
+        [Required]
         public string Title { get; set; }
+        [Required]
         public string Company { get; set; }
+        [Required]
         public string Description { get; set; }
+        [Required]
         public string Salary { get; set; }
-        public string Location { get; set; }
+        [Required]
+        public string City { get; set; }
         public DateTime Created { get; set; } = DateTime.Now;
-        public bool IsApproved { get; set; }
+        public bool IsApproved { get; set; } = false;
         [Required]
         public string UserId { get; set; }
         [ForeignKey(nameof(UserId))]
