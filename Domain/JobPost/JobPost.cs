@@ -21,7 +21,7 @@ namespace Domain.JobPost
         [Required]
         public string Salary { get; set; }
         [Required]
-        public string City { get; set; }
+        public string Location { get; set; }
         public DateTime Created { get; set; } = DateTime.Now;
         public bool IsApproved { get; set; } = false;
         [Required]

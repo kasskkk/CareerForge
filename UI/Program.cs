@@ -1,4 +1,5 @@
 using Infrastructure.Data;
+using Infrastructure.Data.Seeder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -39,6 +40,13 @@ namespace UI
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
+            }
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+
+                RoleSeeder.SeedRolesAsync(services).Wait();
             }
 
             app.UseHttpsRedirection();
