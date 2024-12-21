@@ -1,0 +1,45 @@
+﻿@model UI.ViewModels.JobPostViewModel;
+
+
+<h1>Create</h1>
+
+<form method="post" asp-action="Create">
+
+    <div class="mb-3">
+        <label class="form-label">Title</label>
+        <input class="form-control" type="text" asp-for="Title" />
+        <span class="text-danger" asp-validation-for="Title"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Company</label>
+        <input class="form-control" type="text" asp-for="Company" />
+        <span class="text-danger" asp-validation-for="Company"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Description</label>
+        <input class="form-control" type="text" asp-for="Description" />
+        <span class="text-danger" asp-validation-for="Description"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Salary</label>
+        <input class="form-control" type="text" asp-for="Salary" />
+        <span class="text-danger" asp-validation-for="Salary"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Location</label>
+        <input class="form-control" type="text" asp-for="Location" />
+        <span class="text-danger" asp-validation-for="Location"></span>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Confirm</button>
+</form>
+
+@section scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

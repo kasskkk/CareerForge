@@ -1,5 +1,9 @@
+using Application.JobPost;
+using Domain.Generic;
+using Domain.JobPost;
 using Infrastructure.Data;
 using Infrastructure.Data.Seeder;
+using Infrastructure.JobPost;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,6 +27,9 @@ namespace UI
             })
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            builder.Services.AddScoped<IRepository<JobPost>, JobPostRepository>()
+                .AddScoped<IJobPostService, JobPostService>();
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
