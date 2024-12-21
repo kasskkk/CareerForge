@@ -31,12 +31,12 @@ namespace Application.JobPost
 
         public async Task<Domain.JobPost.JobPost> GetByIdAsync(int id)
         {
-            return await GetByIdAsync(id);
+            return await _repository.GetByIdAsync(id);
         }
 
         public async Task UpdateAsync(Domain.JobPost.JobPost entity)
         {
-            await UpdateAsync(entity);
+            await _repository.UpdateAsync(entity);
         }
     }
 }
