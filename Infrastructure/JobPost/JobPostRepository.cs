@@ -18,7 +18,7 @@ namespace Infrastructure.JobPost
         }
         public async Task AddAsync(Domain.JobPost.JobPost entity)
         {
-            await _context.AddAsync(entity);
+            await _context.JobPosts.AddAsync(entity);
             await _context.SaveChangesAsync();
         }
 
