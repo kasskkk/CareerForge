@@ -38,5 +38,14 @@ namespace Application.JobPost
         {
             await _repository.UpdateAsync(entity);
         }
+
+        public async Task ApproveAsync(int id)
+        {
+            var jobPost = await _repository.GetByIdAsync(id);
+
+            jobPost.IsApproved = true;
+
+            await _repository.UpdateAsync(jobPost);
+        }
     }
 }
