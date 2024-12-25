@@ -1,4 +1,5 @@
 ﻿using Application.JobPost;
+using Domain.Constant;
 using Domain.JobPost;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -7,6 +8,7 @@ using UI.ViewModels;
 
 namespace UI.Controllers
 {
+    [Authorize]
     public class JobPostController : Controller
     {
         private readonly IJobPostService _jobPostService;
@@ -16,6 +18,8 @@ namespace UI.Controllers
             _jobPostService = jobPostService;
             _userManager = userManager;
         }
+
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var jobPosts = await _jobPostService.GetAllAsync();
@@ -23,13 +27,14 @@ namespace UI.Controllers
             return View(jobPosts);
         }
 
+        [Authorize(Roles = $"{Role.ADMIN},{Role.EMPLOYER}")]
         public IActionResult Create()
         {
             return View();
         }
 
-        //change later on viewmodel if works
         [HttpPost]
+        [Authorize(Roles = $"{Role.ADMIN},{Role.EMPLOYER}")]
         public async Task<IActionResult> Create(JobPostViewModel jobPostVm)
         {
             if (ModelState.IsValid)
@@ -46,14 +51,10 @@ namespace UI.Controllers
                     UserId = _userManager.GetUserId(User)
                 };
 
-                Console.WriteLine("Dodawanie chyba1");
                 await _jobPostService.AddAsync(jobPost);
 
-                Console.WriteLine("Dodawanie chyba2");
                 return RedirectToAction(nameof(Index));
             }
-
-            Console.WriteLine("Nie dzialaaaaa");
             return View(jobPostVm);
         }
 
