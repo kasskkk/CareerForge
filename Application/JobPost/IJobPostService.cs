@@ -13,5 +13,6 @@ namespace Application.JobPost
         Task AddAsync(Domain.JobPost.JobPost entity);
         Task UpdateAsync(Domain.JobPost.JobPost entity);
         Task DeleteAsync(int id);
+        Task ApproveAsync(int id);
     }
 }
