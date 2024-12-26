@@ -58,5 +58,14 @@ namespace UI.Controllers
             return View(jobPostVm);
         }
 
+        [HttpDelete]
+        [Authorize(Roles = $"{Role.ADMIN},{Role.EMPLOYER}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _jobPostService.DeleteAsync(id, User);
+
+            return Ok();
+        }
+
     }
 }
