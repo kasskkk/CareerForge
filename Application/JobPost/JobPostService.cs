@@ -1,7 +1,10 @@
-﻿using Domain.Generic;
+﻿using Domain.Constant;
+using Domain.Generic;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,17 +13,28 @@ namespace Application.JobPost
     public class JobPostService : IJobPostService
     {
         private readonly IRepository<Domain.JobPost.JobPost> _repository;
-        public JobPostService(IRepository<Domain.JobPost.JobPost> repository) 
+        private readonly UserManager<IdentityUser> _userManager;
+        public JobPostService(IRepository<Domain.JobPost.JobPost> repository, UserManager<IdentityUser> userManager) 
         { 
             _repository = repository;
+            _userManager = userManager;
         }
         public async Task AddAsync(Domain.JobPost.JobPost entity)
         {
             await _repository.AddAsync(entity);
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id, ClaimsPrincipal user)
         {
+            var jobPost = await _repository.GetByIdAsync(id);
+
+            var userId = _userManager.GetUserId(user);
+
+            if (userId != jobPost.UserId && !user.IsInRole(Role.ADMIN))
+            {
+                throw new UnauthorizedAccessException();
+            }
+
             await _repository.DeleteAsync(id);
         }
 
