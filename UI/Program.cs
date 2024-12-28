@@ -56,6 +56,8 @@ namespace UI
                 RoleSeeder.SeedRolesAsync(services).Wait();
 
                 UserSeeder.SeedUsersAsync(services).Wait();
+
+                JobCategorySeeder.SeedCategoriesAsync(services).Wait();
             }
 
             app.UseHttpsRedirection();
