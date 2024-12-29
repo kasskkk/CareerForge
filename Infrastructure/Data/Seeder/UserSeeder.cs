@@ -17,7 +17,7 @@ namespace Infrastructure.Data.Seeder
 
             await CreateUserWithRoleAsync(usermenager, "admin@test.com", "Admin!123", Role.ADMIN);
             await CreateUserWithRoleAsync(usermenager, "jobseeker@test.com", "Jobseeker!123", Role.JOBSEEKER);
-            await CreateUserWithRoleAsync(usermenager, "employertest.com", "Employer!123", Role.EMPLOYER);
+            await CreateUserWithRoleAsync(usermenager, "employer@test.com", "Employer!123", Role.EMPLOYER);
         }
 
         private static async Task CreateUserWithRoleAsync(UserManager<IdentityUser> usermanager, string email, string password, string role)
