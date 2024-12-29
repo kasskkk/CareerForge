@@ -67,5 +67,12 @@ namespace UI.Controllers
             return Ok();
         }
 
+        [Authorize(Roles = $"{Role.ADMIN},{Role.EMPLOYER}")]
+        public async Task<IActionResult> MyOffers()
+        {
+            var myJobPosts = await _jobPostService.GetQueryable(User);
+
+            return View(myJobPosts);
+        }
     }
 }
