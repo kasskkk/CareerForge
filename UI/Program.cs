@@ -28,7 +28,8 @@ namespace UI
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            builder.Services.AddScoped<IRepository<JobPost>, JobPostRepository>()
+            builder.Services
+                .AddScoped<IJobPostRepository, JobPostRepository>()
                 .AddScoped<IJobPostService, JobPostService>();
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
