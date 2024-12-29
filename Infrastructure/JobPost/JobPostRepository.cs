@@ -1,4 +1,5 @@
 ﻿using Domain.Generic;
+using Domain.JobPost;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.JobPost
 {
-    public class JobPostRepository : IRepository<Domain.JobPost.JobPost>
+    public class JobPostRepository : IJobPostRepository
     {
         private readonly ApplicationDbContext _context;
         public JobPostRepository(ApplicationDbContext context)
@@ -39,6 +40,11 @@ namespace Infrastructure.JobPost
         public async Task<IEnumerable<Domain.JobPost.JobPost>> GetAllAsync()
         {
             return await _context.JobPosts.ToListAsync();
+        }
+
+        public IQueryable<Domain.JobPost.JobPost> GetQueryable()
+        {
+            return _context.JobPosts.AsQueryable();
         }
 
         public async Task<Domain.JobPost.JobPost> GetByIdAsync(int id)

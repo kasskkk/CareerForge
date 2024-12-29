@@ -15,5 +15,6 @@ namespace Application.JobPost
         Task UpdateAsync(Domain.JobPost.JobPost entity);
         Task DeleteAsync(int id, ClaimsPrincipal user);
         Task ApproveAsync(int id);
+        Task<IEnumerable<Domain.JobPost.JobPost>> GetQueryable(ClaimsPrincipal user);
     }
 }

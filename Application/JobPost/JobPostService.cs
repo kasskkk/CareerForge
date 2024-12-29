@@ -1,5 +1,6 @@
 ﻿using Domain.Constant;
 using Domain.Generic;
+using Domain.JobPost;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,10 @@ namespace Application.JobPost
 {
     public class JobPostService : IJobPostService
     {
-        private readonly IRepository<Domain.JobPost.JobPost> _repository;
+        private readonly IJobPostRepository _repository;
         private readonly UserManager<IdentityUser> _userManager;
-        public JobPostService(IRepository<Domain.JobPost.JobPost> repository, UserManager<IdentityUser> userManager) 
-        { 
+        public JobPostService(IJobPostRepository repository, UserManager<IdentityUser> userManager)
+        {
             _repository = repository;
             _userManager = userManager;
         }
@@ -61,5 +62,16 @@ namespace Application.JobPost
 
             await _repository.UpdateAsync(jobPost);
         }
+
+        public async Task<IEnumerable<Domain.JobPost.JobPost>> GetQueryable(ClaimsPrincipal user)
+        {
+            var userId = _userManager.GetUserId(user);
+
+            var myPosts = _repository.GetQueryable()
+                .Where(m => m.UserId == userId);
+
+            return await Task.FromResult(myPosts.ToList());
+        }
+
     }
 }
