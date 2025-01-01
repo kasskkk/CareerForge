@@ -35,7 +35,7 @@ namespace Infrastructure.Data.Seeder
             await context.SaveChangesAsync();
         }
 
-        public static async Task CreateJobCategoryAsync(ApplicationDbContext context, string name)
+        private static async Task CreateJobCategoryAsync(ApplicationDbContext context, string name)
         {
             var category = new JobCategory()
             {
