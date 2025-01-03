@@ -28,5 +28,9 @@ namespace Domain.JobPost
         public string UserId { get; set; }
         [ForeignKey(nameof(UserId))]
         public IdentityUser User { get; set; }
+        [Required]
+        public int JobCategoryId { get; set; }
+        [ForeignKey(nameof(JobCategoryId))]
+        public JobCategory Category { get; set; }
     }
 }
