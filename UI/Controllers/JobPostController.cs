@@ -48,7 +48,8 @@ namespace UI.Controllers
                     Description = jobPostVm.Description,
                     Salary = jobPostVm.Salary,
                     Location = jobPostVm.Location,
-                    UserId = _userManager.GetUserId(User)
+                    UserId = _userManager.GetUserId(User),
+                    JobCategoryId = jobPostVm.JobCategoryId,
                 };
 
                 await _jobPostService.AddAsync(jobPost);

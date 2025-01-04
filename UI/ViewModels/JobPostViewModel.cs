@@ -14,5 +14,7 @@ namespace UI.ViewModels
         public string Salary { get; set; }
         [Required]
         public string Location { get; set; }
+        [Required]
+        public int JobCategoryId { get; set; }
     }
 }
