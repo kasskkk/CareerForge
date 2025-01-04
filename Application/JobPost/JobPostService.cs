@@ -67,10 +67,11 @@ namespace Application.JobPost
         {
             var userId = _userManager.GetUserId(user);
 
-            var myPosts = _repository.GetQueryable()
-                .Where(m => m.UserId == userId);
+            var queryablePosts = await _repository.GetQueryAbleAsync();
 
-            return await Task.FromResult(myPosts.ToList());
+            var myPosts = queryablePosts.Where(m => m.UserId == userId);
+
+            return myPosts.ToList();
         }
 
     }
