@@ -9,6 +9,5 @@ namespace Domain.JobPost
 {
     public interface IJobPostRepository : IRepository<JobPost>
     {
-        IQueryable<JobPost> GetQueryable();
     }
 }
