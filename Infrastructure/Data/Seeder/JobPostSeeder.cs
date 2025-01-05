@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain.JobPost;
+using Infrastructure.Migrations;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -12,14 +15,39 @@ namespace Infrastructure.Data.Seeder
     {
         public static async Task SeedJobPostsAsync(IServiceProvider serviceProvider)
         {
+            var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
             var context = serviceProvider.GetRequiredService<ApplicationDbContext>();
 
-            await CreateJobPostAsync(context,"Test1","Test1","Test1", "Test1","Test1", "2fbb398a-e3a9-4d2d-9f95-6c38b7def50f");
-            await CreateJobPostAsync(context,"Test2","Test2","Test2", "Test2","Test2", "2fbb398a-e3a9-4d2d-9f95-6c38b7def50f");
-            await CreateJobPostAsync(context,"Test3","Test3","Test3", "Test3","Test3", "4ec73766-9786-4afd-8cda-530860a979c6");
-            await CreateJobPostAsync(context,"Test4","Test4","Test4", "Test4","Test4", "4ec73766-9786-4afd-8cda-530860a979c6");
+            string adminId = "", employerId = "";
+            var categoryId = 0;
+            var admin = await userManager.FindByEmailAsync("admin@test.com");
+            if (admin == null)
+            {
+                throw new Exception("Admin user not found");
+            }
+            adminId = admin.Id;
+
+            var employer = await userManager.FindByEmailAsync("employer@test.com");
+            if (employer == null)
+            {
+                throw new Exception("Employer user not found");
+            }
+            employerId = employer.Id;
+
+            var category = await context.JobCategories.FirstOrDefaultAsync(c => c.Name == "Other");
+            if (category == null)
+            {
+                throw new Exception($"Category property {nameof(category.Name)} not found");
+            }
+            categoryId = category.Id;
+
+
+            await CreateJobPostAsync(context, "Test1", "Test1", "Test1", "Test1", "Test1", adminId, categoryId);
+            await CreateJobPostAsync(context, "Test2", "Test2", "Test2", "Test2", "Test2", adminId, categoryId);
+            await CreateJobPostAsync(context, "Test3", "Test3", "Test3", "Test3", "Test3", employerId, categoryId);
+            await CreateJobPostAsync(context, "Test4", "Test4", "Test4", "Test4", "Test4", employerId, categoryId);
         }
-        private static async Task CreateJobPostAsync(ApplicationDbContext context, string title, string Company, string description,string salary, string location, string userId)
+        private static async Task CreateJobPostAsync(ApplicationDbContext context, string title, string Company, string description, string salary, string location, string userId, int jobCategoryId)
         {
             if (!await context.JobPosts.AnyAsync(j => j.Title == title))
             {
@@ -32,7 +60,8 @@ namespace Infrastructure.Data.Seeder
                     Location = location,
                     Created = DateTime.Now,
                     IsApproved = true,
-                    UserId = userId
+                    UserId = userId,
+                    JobCategoryId = jobCategoryId
                 };
 
                 await context.AddAsync(jobPost);
