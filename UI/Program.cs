@@ -3,8 +3,10 @@ using Domain.Generic;
 using Domain.JobPost;
 using Infrastructure.Data;
 using Infrastructure.Data.Seeder;
+using Infrastructure.Generic;
 using Infrastructure.JobPost;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.CodeAnalysis.Operations;
 using Microsoft.EntityFrameworkCore;
 
 namespace UI
@@ -29,8 +31,11 @@ namespace UI
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             builder.Services
+                .AddScoped(typeof(IRepository<>), typeof(GenericRepository<>))
                 .AddScoped<IJobPostRepository, JobPostRepository>()
-                .AddScoped<IJobPostService, JobPostService>();
+                .AddScoped<IJobPostService, JobPostService>()
+                .AddScoped<IJobCategoryRepository, JobCategoryRepository>();
+            
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
