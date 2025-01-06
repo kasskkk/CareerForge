@@ -1,6 +1,5 @@
 ﻿@model UI.ViewModels.JobPostViewModel;
 
-
 <h1>Create</h1>
 
 <form method="post" asp-action="Create">
@@ -33,6 +32,12 @@
         <label class="form-label">Location</label>
         <input class="form-control" type="text" asp-for="Location" />
         <span class="text-danger" asp-validation-for="Location"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" asp-for="JobCategoryId">Category</label>
+        <select class="form-control" asp-for="JobCategoryId" asp-items="Model.Categories"></select>
+        <span class="text-danger" asp-validation-for="JobCategoryId"></span>
     </div>
 
     <button class="btn btn-primary" type="submit">Confirm</button>
