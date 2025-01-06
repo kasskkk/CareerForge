@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 
 namespace UI.ViewModels
 {
@@ -16,5 +17,6 @@ namespace UI.ViewModels
         public string Location { get; set; }
         [Required]
         public int JobCategoryId { get; set; }
+        public IEnumerable<SelectListItem>? Categories { get; set; }
     }
 }
