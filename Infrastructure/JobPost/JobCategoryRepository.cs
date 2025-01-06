@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.JobPost
 {
-    public class JobCategoryRepository : GenericRepository<JobCategory> , IJobCategoryRepository
+    public class JobCategoryRepository : GenericRepository<JobCategory>, IJobCategoryRepository
     {
         public JobCategoryRepository(ApplicationDbContext context) : base(context)
         {
