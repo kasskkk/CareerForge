@@ -4,6 +4,7 @@ using Domain.JobPost;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using UI.ViewModels;
 
 namespace UI.Controllers
@@ -13,10 +14,12 @@ namespace UI.Controllers
     {
         private readonly IJobPostService _jobPostService;
         private readonly UserManager<IdentityUser> _userManager;
-        public JobPostController(IJobPostService jobPostService, UserManager<IdentityUser> userManager)
+        private readonly IJobCategoryRepository _jobCategoryRepository;
+        public JobPostController(IJobPostService jobPostService, UserManager<IdentityUser> userManager, IJobCategoryRepository jobCategoryRepository)
         {
             _jobPostService = jobPostService;
             _userManager = userManager;
+            _jobCategoryRepository = jobCategoryRepository;
         }
 
         [AllowAnonymous]
@@ -28,35 +31,51 @@ namespace UI.Controllers
         }
 
         [Authorize(Roles = $"{Role.ADMIN},{Role.EMPLOYER}")]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View();
+            var categories = await _jobCategoryRepository.GetAllAsync();
+
+            var viewModel = new JobPostViewModel()
+            {
+                Categories = categories.Select(c => new SelectListItem
+                {
+                    Value = c.Id.ToString(),
+                    Text = c.Name
+                })
+            };
+
+            return View(viewModel);
         }
 
         [HttpPost]
         [Authorize(Roles = $"{Role.ADMIN},{Role.EMPLOYER}")]
         public async Task<IActionResult> Create(JobPostViewModel jobPostVm)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                Console.WriteLine("jest valid");
-
-                var jobPost = new JobPost()
+                var categories = await _jobCategoryRepository.GetAllAsync();
+                jobPostVm.Categories = categories.Select(c => new SelectListItem
                 {
-                    Title = jobPostVm.Title,
-                    Company = jobPostVm.Company,
-                    Description = jobPostVm.Description,
-                    Salary = jobPostVm.Salary,
-                    Location = jobPostVm.Location,
-                    UserId = _userManager.GetUserId(User),
-                    JobCategoryId = jobPostVm.JobCategoryId,
-                };
+                    Value = c.Id.ToString(),
+                    Text = c.Name
+                }).ToList();
 
-                await _jobPostService.AddAsync(jobPost);
-
-                return RedirectToAction(nameof(Index));
+                return View(jobPostVm);
             }
-            return View(jobPostVm);
+
+            var jobPost = new JobPost
+            {
+                Title = jobPostVm.Title,
+                Company = jobPostVm.Company,
+                Description = jobPostVm.Description,
+                Salary = jobPostVm.Salary,
+                Location = jobPostVm.Location,
+                UserId = _userManager.GetUserId(User),
+                JobCategoryId = jobPostVm.JobCategoryId
+            };
+
+            await _jobPostService.AddAsync(jobPost);
+            return RedirectToAction("Index");
         }
 
         [HttpDelete]
