@@ -36,7 +36,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("JobCategories");
+                    b.ToTable("JobCategories", (string)null);
                 });
 
             modelBuilder.Entity("Domain.JobPost.JobPost", b =>
@@ -86,7 +86,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("JobPosts");
+                    b.ToTable("JobPosts", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
