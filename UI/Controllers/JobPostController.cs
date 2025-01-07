@@ -94,5 +94,17 @@ namespace UI.Controllers
 
             return View(myJobPosts);
         }
+        [AllowAnonymous]
+        public async Task<IActionResult> Details(int id)
+        {
+            var job = await _jobPostService.GetByIdAsync(id);
+
+            if (job == null)
+            {
+                return NotFound();
+            }
+
+            return View(job);
+        }
     }
 }
