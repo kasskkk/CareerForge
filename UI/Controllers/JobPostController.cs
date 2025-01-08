@@ -25,9 +25,9 @@ namespace UI.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            var jobPosts = await _jobPostService.GetAllAsync();
+            var approvedJobPosts = await _jobPostService.GetAllApproved();
 
-            return View(jobPosts);
+            return View(approvedJobPosts);
         }
 
         [Authorize(Roles = $"{Role.ADMIN},{Role.EMPLOYER}")]
@@ -94,6 +94,7 @@ namespace UI.Controllers
 
             return View(myJobPosts);
         }
+
         [AllowAnonymous]
         public async Task<IActionResult> Details(int id)
         {
