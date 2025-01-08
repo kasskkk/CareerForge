@@ -74,5 +74,18 @@ namespace Application.JobPost
             return myPosts.ToList();
         }
 
+        public async Task<IEnumerable<Domain.JobPost.JobPost>> GetAllApproved()
+        {
+            var jobPosts = await _repository.GetAllAsync();
+
+            if (jobPosts == null)
+            {
+                throw new ArgumentNullException(nameof(jobPosts));
+            }
+
+            var approvedPosts = jobPosts.Where(j => j.IsApproved == true);
+
+            return approvedPosts.ToList();
+        }
     }
 }
