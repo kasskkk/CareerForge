@@ -90,7 +90,12 @@ namespace UI.Controllers
         [Authorize(Roles = $"{Role.ADMIN},{Role.EMPLOYER}")]
         public async Task<IActionResult> MyOffers()
         {
-            var myJobPosts = await _jobPostService.GetQueryable(User);
+            var myJobPosts = await _jobPostService.GetMyPosts(User);
+
+            if (myJobPosts == null)
+            {
+                return NotFound();
+            }
 
             return View(myJobPosts);
         }
@@ -107,5 +112,29 @@ namespace UI.Controllers
 
             return View(job);
         }
+
+        [Authorize(Roles = $"{Role.ADMIN}")]
+        public async Task<IActionResult> Approve()
+        {
+            var unapprovedPosts = await _jobPostService.GetAllUnapproved();
+
+            if (unapprovedPosts == null)
+            {
+                return NotFound();
+            }
+
+            return View(unapprovedPosts);
+        }
+
+        [Authorize(Roles = $"{Role.ADMIN}")]
+        [HttpPost]
+        public async Task<IActionResult> Approve(int id)
+        {
+            await _jobPostService.ApproveAsync(id);
+
+            return RedirectToAction(nameof(Approve));
+        }
+
+
     }
 }
