@@ -1,7 +1,16 @@
 ﻿@model Domain.JobPost.JobPost
+@using Domain.Constant;
 
 <h1>Work placement: @Model.Title</h1>
 <p>Company: @Model.Company</p>
 <p>Location: @Model.Location</p>
 <p>Salary: @Model.Salary</p>
 <p>Description: @Model.Description</p>
+
+
+@if (User.IsInRole(Role.ADMIN))
+{
+    <form method="post" asp-action="Approve" asp-controller="JobPost" asp-route-id="@Model.Id">
+        <button class="btn btn-success" type="submit">Approve</button>
+    </form>
+}
