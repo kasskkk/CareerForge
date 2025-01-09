@@ -63,15 +63,19 @@ namespace Application.JobPost
             await _repository.UpdateAsync(jobPost);
         }
 
-        public async Task<IEnumerable<Domain.JobPost.JobPost>> GetQueryable(ClaimsPrincipal user)
+        public async Task<IEnumerable<Domain.JobPost.JobPost>> GetMyPosts(ClaimsPrincipal user)
         {
             var userId = _userManager.GetUserId(user);
+            var jobPosts = await _repository.GetAllAsync();
 
-            var queryablePosts = await _repository.GetQueryAbleAsync();
+            if (jobPosts == null)
+            {
+                throw new ArgumentNullException(nameof(jobPosts));
+            }
 
-            var myPosts = queryablePosts.Where(m => m.UserId == userId);
+            var myPosts = jobPosts.Where(j => j.UserId == userId).ToList();
 
-            return myPosts.ToList();
+            return myPosts;
         }
 
         public async Task<IEnumerable<Domain.JobPost.JobPost>> GetAllApproved()
@@ -83,9 +87,23 @@ namespace Application.JobPost
                 throw new ArgumentNullException(nameof(jobPosts));
             }
 
-            var approvedPosts = jobPosts.Where(j => j.IsApproved == true);
+            var approvedPosts = jobPosts.Where(j => j.IsApproved == true).ToList();
 
-            return approvedPosts.ToList();
+            return approvedPosts;
+        }
+
+        public async Task<IEnumerable<Domain.JobPost.JobPost>> GetAllUnapproved()
+        {
+            var jobPosts = await _repository.GetAllAsync();
+
+            if (jobPosts == null)
+            {
+                throw new ArgumentNullException(nameof(jobPosts));
+            }
+
+            var unapprovedPosts = jobPosts.Where(j => j.IsApproved == false).ToList();
+
+            return unapprovedPosts;
         }
     }
 }
