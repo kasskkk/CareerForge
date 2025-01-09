@@ -1,0 +1,21 @@
+﻿@model IEnumerable<Domain.JobPost.JobPost>
+
+<div class="container mt-4">
+    <div class="row">
+        @foreach (var job in Model)
+        {
+            <div class="col-md-4 mt-4">
+                <div class="card shadow-sm">
+                    <a asp-action="Details" asp-controller="JobPost" asp-route-id="@job.Id" class="stretched-link"></a>
+                    <div class="card-body">
+                        <h5 class="card-title">@job.Title</h5>
+                        <p class="card-text">@job.Company</p>
+                        <p class="card-text">Lokalizacja: @job.Location</p>
+                        <p class="card-text">@job.Description</p>
+                        <p class="card-text text-danger" >Waiting for approvement</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
