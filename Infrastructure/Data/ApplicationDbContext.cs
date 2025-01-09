@@ -13,6 +13,7 @@ namespace Infrastructure.Data
     {
         public DbSet<Domain.JobPost.JobPost> JobPosts { get; set; }
         public DbSet<JobCategory> JobCategories { get; set; }
+        public DbSet<Domain.ReportedPost.ReportedJobPost>  ReportedJobPosts { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
     }
