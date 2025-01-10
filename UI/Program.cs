@@ -1,4 +1,5 @@
 using Application.JobPost;
+using Application.ReportedPostService;
 using Domain.Generic;
 using Domain.JobPost;
 using Infrastructure.Data;
@@ -34,7 +35,9 @@ namespace UI
                 .AddScoped(typeof(IRepository<>), typeof(GenericRepository<>))
                 .AddScoped<IJobPostRepository, JobPostRepository>()
                 .AddScoped<IJobPostService, JobPostService>()
-                .AddScoped<IJobCategoryRepository, JobCategoryRepository>();
+                .AddScoped<IJobCategoryRepository, JobCategoryRepository>()
+                .AddScoped<IReportedJobPostService, ReportedJobPostService>();
+                
             
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
