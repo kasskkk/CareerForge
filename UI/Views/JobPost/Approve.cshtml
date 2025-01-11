@@ -2,11 +2,18 @@
 
 <div class="container mt-4">
     <div class="row">
+        @if (!Model.Any())
+        {
+            <div class="col-12 text-center">
+                <h1 class="text-info">No offers waiting for approvement</h1>
+            </div>
+        }
+
         @foreach (var job in Model)
         {
             <div class="col-md-4 mt-4">
                 <div class="card shadow-sm">
-                    <a asp-action="Details" asp-controller="JobPost" asp-route-id="@job.Id" class="stretched-link"></a>
+                    <a asp-action="Details" asp-controller="JobPost" asp-route-id="@job.Id" asp-route-fromApprove="true" class="stretched-link"></a>
                     <div class="card-body">
                         <h5 class="card-title">@job.Title</h5>
                         <p class="card-text">@job.Company</p>
