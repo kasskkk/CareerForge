@@ -101,7 +101,7 @@ namespace UI.Controllers
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(int id, bool fromApprove)
         {
             var job = await _jobPostService.GetByIdAsync(id);
 
@@ -110,6 +110,7 @@ namespace UI.Controllers
                 return NotFound();
             }
 
+            ViewBag.FromApprove = fromApprove;
             return View(job);
         }
 
