@@ -8,7 +8,7 @@
 <p>Description: @Model.Description</p>
 
 
-@if (User.IsInRole(Role.ADMIN))
+@if (User.IsInRole(Role.ADMIN) && ViewBag.FromApprove)
 {
     <form method="post" asp-action="Approve" asp-controller="JobPost" asp-route-id="@Model.Id">
         <button class="btn btn-success" type="submit">Approve</button>
