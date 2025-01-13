@@ -14,12 +14,12 @@
     </form>
 }
 
-<button class="btn btn-danger" type="button" onclick="toggleReportForm()">Zgłoś</button>
+<button class="btn btn-danger" type="button" onclick="toggleReportForm()">Report</button>
 
 <div id="reportForm" style="display:none;">
     <form method="post" asp-action="Report" asp-controller="ReportedJobPost" asp-route-id="@Model.Id">
         <div class="mb-3">
-            <label for="reportType" class="form-label">Typ zgłoszenia</label>
+            <label for="reportType" class="form-label">Type of report</label>
             <select id="reportType" name="Name" class="form-control">
                 @foreach (var reportName in Enum.GetValues(typeof(Domain.Enum.ReportName)))
                 {
@@ -28,11 +28,11 @@
             </select>
         </div>
         <div class="mb-3">
-            <label for="description" class="form-label">Opis</label>
+            <label for="description" class="form-label" placeholder="Please describe problem" >Description</label>
             <textarea id="description" name="Description" class="form-control"></textarea>
         </div>
-        <button class="btn btn-primary" type="submit">Wyślij zgłoszenie</button>
-        <button class="btn btn-secondary" type="button" onclick="toggleReportForm()">Anuluj</button>
+        <button class="btn btn-primary" type="submit">Send report</button>
+        <button class="btn btn-secondary" type="button" onclick="toggleReportForm()">Cancel</button>
     </form>
 </div>
 
