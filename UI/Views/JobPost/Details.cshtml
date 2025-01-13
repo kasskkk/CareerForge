@@ -7,10 +7,44 @@
 <p>Salary: @Model.Salary</p>
 <p>Description: @Model.Description</p>
 
-
 @if (User.IsInRole(Role.ADMIN) && ViewBag.FromApprove)
 {
     <form method="post" asp-action="Approve" asp-controller="JobPost" asp-route-id="@Model.Id">
         <button class="btn btn-success" type="submit">Approve</button>
     </form>
+}
+
+<button class="btn btn-danger" type="button" onclick="toggleReportForm()">Zgłoś</button>
+
+<div id="reportForm" style="display:none;">
+    <form method="post" asp-action="Report" asp-controller="ReportedJobPost" asp-route-id="@Model.Id">
+        <div class="mb-3">
+            <label for="reportType" class="form-label">Typ zgłoszenia</label>
+            <select id="reportType" name="Name" class="form-control">
+                @foreach (var reportName in Enum.GetValues(typeof(Domain.Enum.ReportName)))
+                {
+                    <option value="@reportName">@reportName</option>
+                }
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Opis</label>
+            <textarea id="description" name="Description" class="form-control"></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit">Wyślij zgłoszenie</button>
+        <button class="btn btn-secondary" type="button" onclick="toggleReportForm()">Anuluj</button>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        function toggleReportForm() {
+            var reportForm = document.getElementById('reportForm');
+            if (reportForm.style.display === 'none' || reportForm.style.display === '') {
+                reportForm.style.display = 'block';
+            } else {
+                reportForm.style.display = 'none';
+            }
+        }
+    </script>
 }
