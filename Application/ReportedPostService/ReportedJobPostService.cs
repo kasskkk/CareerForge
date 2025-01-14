@@ -1,4 +1,5 @@
 ﻿using Application.JobPost;
+using Domain.Constant;
 using Domain.Generic;
 using Domain.ReportedPost;
 using System;
@@ -18,14 +19,21 @@ namespace Application.ReportedPostService
             _repository = repository;
         }
 
-        public Task AddAsync(ReportedJobPost entity)
+        public async Task AddAsync(ReportedJobPost entity)
         {
-            throw new NotImplementedException();
+            await _repository.AddAsync(entity);
         }
 
-        public Task DeleteAsync(int id, ClaimsPrincipal user)
+        public async Task DeleteAsync(int id, ClaimsPrincipal user)
         {
-            throw new NotImplementedException();
+            var reportJobPost = await _repository.GetByIdAsync(id);
+
+            if (!user.IsInRole(Role.ADMIN))
+            {
+                throw new UnauthorizedAccessException();
+            }
+
+            await _repository.DeleteAsync(id);
         }
 
         public async Task<IEnumerable<ReportedJobPost>> GetAllAsync()
@@ -33,14 +41,14 @@ namespace Application.ReportedPostService
             return await _repository.GetAllAsync();
         }
 
-        public Task<ReportedJobPost> GetByIdAsync(int id)
+        public async Task<ReportedJobPost> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _repository.GetByIdAsync(id);
         }
 
-        public Task UpdateAsync(ReportedJobPost entity)
+        public async Task UpdateAsync(ReportedJobPost entity)
         {
-            throw new NotImplementedException();
+            await _repository.UpdateAsync(entity);
         }
     }
 }
