@@ -78,13 +78,34 @@ namespace UI.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpDelete]
+        [HttpPost]
         [Authorize(Roles = $"{Role.ADMIN},{Role.EMPLOYER}")]
         public async Task<IActionResult> Delete(int id)
         {
+            var job = await _jobPostService.GetByIdAsync(id);
+
+            if (job == null)
+            {
+                return NotFound();
+            }
+
+            var userId = _userManager.GetUserId(User);
+
+            if (User.IsInRole(Role.ADMIN) && job.UserId != userId)
+            {
+                return Unauthorized("Unauthorized action");
+            }
+
             await _jobPostService.DeleteAsync(id, User);
 
-            return Ok();
+            if (User.IsInRole(Role.ADMIN))
+            {
+                return RedirectToAction(nameof(Approve));
+            }
+            else
+            {
+                return RedirectToAction(nameof(MyOffers));
+            }
         }
 
         [Authorize(Roles = $"{Role.ADMIN},{Role.EMPLOYER}")]
@@ -156,6 +177,13 @@ namespace UI.Controllers
             return RedirectToAction(nameof(Approve));
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Apply(int id)
+        {
+
+
+            return View();
+        }
 
     }
 }
