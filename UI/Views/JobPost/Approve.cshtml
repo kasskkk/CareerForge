@@ -19,7 +19,10 @@
                         <p class="card-text">@job.Company</p>
                         <p class="card-text">Lokalizacja: @job.Location</p>
                         <p class="card-text">@job.Description</p>
-                        <p class="card-text text-danger" >Waiting for approvement</p>
+                        @{
+                            var hours = (DateTime.Now - job.Created).TotalHours;
+                        }
+                        <p class="card-text text-danger">Waiting for approvement for <strong>@hours.ToString("F0")</strong> hours</p>
                     </div>
                 </div>
             </div>
