@@ -1,4 +1,4 @@
-﻿@model Domain.JobPost.JobPost
+﻿@model UI.ViewModels.DetailsReportViewModel
 @using Domain.Constant;
 
 <h1>Work placement: @Model.Title</h1>
@@ -20,7 +20,7 @@
     <form method="post" asp-action="Report" asp-controller="ReportedJobPost" asp-route-id="@Model.Id">
         <div class="mb-3">
             <label for="reportType" class="form-label">Type of report</label>
-            <select id="reportType" name="Name" class="form-control">
+            <select class="form-control" asp-for="ReportName">
                 @foreach (var reportName in Enum.GetValues(typeof(Domain.Enum.ReportName)))
                 {
                     <option value="@reportName">@reportName</option>
@@ -29,7 +29,8 @@
         </div>
         <div class="mb-3">
             <label for="description" class="form-label" placeholder="Please describe problem" >Description</label>
-            <textarea id="description" name="Description" class="form-control"></textarea>
+            <textarea class="form-control" asp-for="ReportDescription"></textarea>
+            <span class="text-danger" asp-validation-for="ReportDescription"></span>
         </div>
         <button class="btn btn-primary" type="submit">Send report</button>
         <button class="btn btn-secondary" type="button" onclick="toggleReportForm()">Cancel</button>
@@ -47,4 +48,7 @@
             }
         }
     </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
