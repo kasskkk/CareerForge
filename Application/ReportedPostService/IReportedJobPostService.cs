@@ -13,6 +13,6 @@ namespace Application.ReportedPostService
         Task<Domain.ReportedPost.ReportedJobPost> GetByIdAsync(int id);
         Task AddAsync(Domain.ReportedPost.ReportedJobPost entity);
         Task UpdateAsync(Domain.ReportedPost.ReportedJobPost entity);
-        Task DeleteAsync(int id, ClaimsPrincipal user);
+        Task DeleteAsync(int id);
     }
 }

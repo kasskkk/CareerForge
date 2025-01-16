@@ -24,14 +24,9 @@ namespace Application.ReportedPostService
             await _repository.AddAsync(entity);
         }
 
-        public async Task DeleteAsync(int id, ClaimsPrincipal user)
+        public async Task DeleteAsync(int id)
         {
             var reportJobPost = await _repository.GetByIdAsync(id);
-
-            if (!user.IsInRole(Role.ADMIN))
-            {
-                throw new UnauthorizedAccessException();
-            }
 
             await _repository.DeleteAsync(id);
         }
