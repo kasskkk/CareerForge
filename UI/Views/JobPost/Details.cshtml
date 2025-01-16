@@ -9,17 +9,20 @@
 
 @if (User.IsInRole(Role.ADMIN) && ViewBag.FromApprove)
 {
-    <form method="post" asp-action="Approve" asp-controller="JobPost" asp-route-id="@Model.Id">
+    <form class="mb-2" method="post" asp-action="Approve" asp-controller="JobPost" asp-route-id="@Model.Id">
         <button class="btn btn-success" type="submit">Approve</button>
+    </form>
+    <form class="mb-2" method="post" asp-action="Delete" asp-controller="JobPost" asp-route-id="@Model.Id">
+        <button class="btn btn-success" type="submit">Delete</button>
     </form>
 }
 
-<button class="btn btn-danger" type="button" onclick="toggleReportForm()">Report</button>
+<button class="btn btn-danger mb-2" type="button" onclick="toggleReportForm()">Report</button>
 
 <div id="reportForm" style="display:none;">
     <form method="post" asp-action="Report" asp-controller="ReportedJobPost" asp-route-id="@Model.Id">
         <div class="mb-3">
-            <label for="reportType" class="form-label">Type of report</label>
+            <label for="reportType" class="form-label">Choose violation</label>
             <select class="form-control" asp-for="ReportName">
                 @foreach (var reportName in Enum.GetValues(typeof(Domain.Enum.ReportName)))
                 {
@@ -28,8 +31,8 @@
             </select>
         </div>
         <div class="mb-3">
-            <label for="description" class="form-label" placeholder="Please describe problem" >Description</label>
-            <textarea class="form-control" asp-for="ReportDescription"></textarea>
+            <label for="description" class="form-label" >Description</label>
+            <textarea class="form-control" asp-for="ReportDescription" placeholder="Please describe problem"></textarea>
             <span class="text-danger" asp-validation-for="ReportDescription"></span>
         </div>
         <button class="btn btn-primary" type="submit">Send report</button>
