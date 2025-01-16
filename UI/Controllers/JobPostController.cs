@@ -110,8 +110,28 @@ namespace UI.Controllers
                 return NotFound();
             }
 
+            var userId = _userManager.GetUserId(User);
+
+            if (!job.IsApproved && !User.IsInRole(Role.ADMIN) && job.UserId != userId)
+            {
+                return Unauthorized();
+            }
+
+            var details = new DetailsReportViewModel()
+            {
+                Id = job.Id,
+                Title = job.Title,
+                Company = job.Company,
+                Location = job.Location,
+                Salary = job.Salary,
+                Description = job.Description,
+                Created = job.Created,
+                JobCategoryId = job.JobCategoryId,
+                Category = job.Category
+            };
+
             ViewBag.FromApprove = fromApprove;
-            return View(job);
+            return View(details);
         }
 
         [Authorize(Roles = $"{Role.ADMIN}")]
