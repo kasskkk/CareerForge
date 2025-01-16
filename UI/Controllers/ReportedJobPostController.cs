@@ -3,6 +3,7 @@ using Domain.Enum;
 using Domain.JobPost;
 using Domain.ReportedPost;
 using Microsoft.AspNetCore.Mvc;
+using UI.ViewModels;
 
 namespace UI.Controllers
 {
@@ -21,18 +22,17 @@ namespace UI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Report(int id, ReportName reportName, string description)
+        public async Task<IActionResult> Report(DetailsReportViewModel viewModel)
         {
-
             var report = new ReportedJobPost()
             {
-                JobPostId = id,
-                Name = reportName, 
-                Description = description
+                JobPostId = viewModel.Id,
+                Name = viewModel.ReportName, 
+                Description = viewModel.ReportDescription
             };
 
             await _service.AddAsync(report);
-            return RedirectToAction(nameof(JobPostController.Details), nameof(JobPost), new { id = id });
+            return RedirectToAction(nameof(JobPostController.Details), nameof(JobPost), new { id = viewModel.Id });
         }
     }
 }
