@@ -1,5 +1,6 @@
 using Application.JobPost;
 using Application.ReportedPostService;
+using Application.User;
 using Domain.Generic;
 using Domain.JobPost;
 using Infrastructure.Data;
@@ -36,7 +37,8 @@ namespace UI
                 .AddScoped<IJobPostRepository, JobPostRepository>()
                 .AddScoped<IJobPostService, JobPostService>()
                 .AddScoped<IJobCategoryRepository, JobCategoryRepository>()
-                .AddScoped<IReportedJobPostService, ReportedJobPostService>();
+                .AddScoped<IReportedJobPostService, ReportedJobPostService>()
+                .AddScoped<IUserInfoService, UserInfoService>();
                 
             
 
