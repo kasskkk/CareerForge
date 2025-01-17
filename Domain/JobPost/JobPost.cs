@@ -32,5 +32,6 @@ namespace Domain.JobPost
         public int JobCategoryId { get; set; }
         [ForeignKey(nameof(JobCategoryId))]
         public JobCategory Category { get; set; }
+        public ICollection<JobApplication> JobApplications { get; set; }
     }
 }
