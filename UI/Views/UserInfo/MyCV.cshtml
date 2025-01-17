@@ -1,0 +1,23 @@
+﻿@model Domain.User.UserInfo
+
+<h1>My CV</h1>
+
+@if (Model != null && !string.IsNullOrEmpty(Model.CVFilePath))
+{
+    <iframe src="@Model.CVFilePath" width="100%" height="600px"></iframe>
+
+    <h1>3</h1>
+    <p>Current CV: <a href="@Model.CVFilePath" target="_blank">Download CV</a></p>
+}
+else
+{
+    <p>You have not uploaded a CV yet.</p>
+}
+
+<form asp-action="UploadCV" asp-controller="UserInfo" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="cvFile">Upload CV</label>
+        <input type="file" class="form-control" id="cvFile" name="cvFile" />
+    </div>
+    <button type="submit" class="btn btn-primary">Upload</button>
+</form>
