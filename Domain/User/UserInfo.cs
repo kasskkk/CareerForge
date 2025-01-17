@@ -17,6 +17,6 @@ namespace Domain.User
         [ForeignKey(nameof(UserId))]
         public IdentityUser User { get; set; }
         [Required]
-        public string CvFilePath { get; set; }
+        public string CVFilePath { get; set; }
     }
 }
