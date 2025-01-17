@@ -16,6 +16,7 @@ namespace Infrastructure.Data
         public DbSet<JobCategory> JobCategories { get; set; }
         public DbSet<Domain.ReportedPost.ReportedJobPost>  ReportedJobPosts { get; set; }
         public DbSet<UserInfo> UserInfos { get; set; }
+        public DbSet<JobApplication> JobApplications { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
     }
