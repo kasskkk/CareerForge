@@ -17,7 +17,21 @@
     </form>
 }
 
-<button class="btn btn-danger mb-2" type="button" onclick="toggleReportForm()">Report</button>
+@if (User.IsInRole(Role.JOBSEEKER))
+{
+    <form class="mb-2" method="post" asp-action="Apply" asp-controller="JobPost" asp-route-id="@Model.Id">
+        <button class="btn btn-success" type="submit">APPLY NOW</button>
+    </form>
+
+    <button class="btn btn-danger mb-2" type="button" onclick="toggleReportForm()">Report</button>
+}
+else if (!User.IsInRole(Role.ADMIN) && !User.IsInRole(Role.EMPLOYER))
+{
+    <form class="mb-2" asp-area="Identity" asp-page="/Account/Login">
+        <button class="btn btn-success mb-2" type="submit">APPLY NOW</button>
+        <button class="btn btn-danger mb-2" type="submit">Report</button>
+    </form>
+}
 
 <div id="reportForm" style="display:none;">
     <form method="post" asp-action="Report" asp-controller="ReportedJobPost" asp-route-id="@Model.Id">
