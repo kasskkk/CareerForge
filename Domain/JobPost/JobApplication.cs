@@ -20,6 +20,6 @@ namespace Domain.JobPost
         public int JobPostId { get; set; }
         [ForeignKey(nameof(JobPostId))]
         public JobPost JobPost { get; set; }
-        public DateTime ApplicationDate { get; set; }
+        public DateTime ApplicationDate { get; set; } = DateTime.Now;
     }
 }

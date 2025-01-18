@@ -1,4 +1,5 @@
-﻿using Application.JobPost;
+﻿using Application.JobApplcation;
+using Application.JobPost;
 using Domain.Constant;
 using Domain.JobPost;
 using Microsoft.AspNetCore.Authorization;
@@ -15,11 +16,13 @@ namespace UI.Controllers
         private readonly IJobPostService _jobPostService;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IJobCategoryRepository _jobCategoryRepository;
-        public JobPostController(IJobPostService jobPostService, UserManager<IdentityUser> userManager, IJobCategoryRepository jobCategoryRepository)
+        private readonly IJobApplicationService _jobApplicationService;
+        public JobPostController(IJobPostService jobPostService, UserManager<IdentityUser> userManager, IJobCategoryRepository jobCategoryRepository, IJobApplicationService jobApplicationService)
         {
             _jobPostService = jobPostService;
             _userManager = userManager;
             _jobCategoryRepository = jobCategoryRepository;
+            _jobApplicationService = jobApplicationService;
         }
 
         [AllowAnonymous]
@@ -177,12 +180,21 @@ namespace UI.Controllers
             return RedirectToAction(nameof(Approve));
         }
 
+        [Authorize(Roles = $"{Role.JOBSEEKER}")]
         [HttpPost]
         public async Task<IActionResult> Apply(int id)
         {
+            var userId = _userManager.GetUserId(User);
 
+            var jobApplication = new JobApplication()
+            {
+                JobPostId = id,
+                UserId = userId,
+            };
 
-            return View();
+            await _jobApplicationService.AddAsync(jobApplication);
+
+            return RedirectToAction(nameof(Index));
         }
 
     }
