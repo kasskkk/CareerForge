@@ -121,7 +121,9 @@ namespace UI.Controllers
                 return NotFound();
             }
 
-            return View(myJobPosts);
+            var sortedJobPosts = myJobPosts.OrderByDescending(job => job.IsApproved).ToList();
+
+            return View(sortedJobPosts);
         }
 
         [AllowAnonymous]
