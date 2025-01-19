@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Domain.JobPost;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -18,5 +19,6 @@ namespace Domain.User
         public IdentityUser User { get; set; }
         [Required]
         public string CVFilePath { get; set; }
+        public ICollection<JobApplication> JobApplications { get; set; }
     }
 }
