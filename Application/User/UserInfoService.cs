@@ -37,9 +37,30 @@ namespace Application.User
             return await _userInfoRepository.GetByIdAsync(id);
         }
 
+        public async Task<UserInfo> GetByUserIdAsync(string id)
+        {
+            var userInfos = await _userInfoRepository.GetAllAsync();
+
+            if (userInfos == null)
+            {
+                throw new ArgumentNullException(nameof(userInfos));
+            }
+
+            var userInfo = userInfos.Where(ui => ui.UserId == id).FirstOrDefault();
+
+            if (userInfo == null)
+            {
+                throw new ArgumentNullException(nameof(userInfo));
+            }
+
+            return userInfo;
+        }
+
         public async Task UpdateAsync(UserInfo entity)
         {
             await _userInfoRepository.UpdateAsync(entity);
         }
+
+
     }
 }

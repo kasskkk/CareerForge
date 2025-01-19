@@ -14,5 +14,6 @@ namespace Application.User
         Task AddAsync(UserInfo entity);
         Task UpdateAsync(UserInfo entity);
         Task DeleteAsync(int id);
+        Task<UserInfo> GetByUserIdAsync(string id);
     }
 }
