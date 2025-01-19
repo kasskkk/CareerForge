@@ -1,3 +1,4 @@
+using Application.JobApplication;
 using Application.JobPost;
 using Application.ReportedPostService;
 using Application.User;
@@ -38,7 +39,8 @@ namespace UI
                 .AddScoped<IJobPostService, JobPostService>()
                 .AddScoped<IJobCategoryRepository, JobCategoryRepository>()
                 .AddScoped<IReportedJobPostService, ReportedJobPostService>()
-                .AddScoped<IUserInfoService, UserInfoService>();
+                .AddScoped<IUserInfoService, UserInfoService>()
+                .AddScoped<IJobApplicationService, JobApplicationService>();
                 
             
 
