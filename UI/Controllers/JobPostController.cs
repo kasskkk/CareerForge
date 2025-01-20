@@ -198,6 +198,19 @@ namespace UI.Controllers
 
             var userInfo = await _userInfoService.GetByUserIdAsync(userId);
 
+            if (string.IsNullOrEmpty(userInfo.CVFilePath))
+            {
+                ModelState.AddModelError(string.Empty, "Musisz dodać CV, aby aplikować do pracy.");
+
+                var job = await _jobPostService.GetByIdAsync(id);
+                if (job == null)
+                {
+                    return NotFound();
+                }
+
+                return View("Details", job.Id);
+            }
+
             var jobApplication = new JobApplication()
             {
                 JobPostId = id,
