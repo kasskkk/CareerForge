@@ -124,6 +124,11 @@ namespace UI.Controllers
                 return NotFound();
             }
 
+            foreach (var job in myJobPosts)
+            {
+                job.JobApplications = (await _jobApplicationService.GetJobApplicationsByJobPostIdAsync(job.Id)).ToList();
+            }
+
             var sortedJobPosts = myJobPosts.OrderByDescending(job => job.IsApproved).ToList();
 
             return View(sortedJobPosts);
@@ -203,5 +208,22 @@ namespace UI.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize(Roles = $"{Role.ADMIN},{Role.EMPLOYER}")]
+        public async Task<IActionResult> JobApplication(int id)
+        {
+            var jobApps = await _jobApplicationService.GetJobApplicationsByJobPostIdAsync(id);
+
+            if (jobApps == null)
+            {
+                return NotFound();
+            }
+
+            foreach (var jobApp in jobApps)
+            {
+                jobApp.UserInfo = await _userInfoService.GetByIdAsync(jobApp.UserInfoId);
+            }
+
+            return View(jobApps);
+        }
     }
 }
