@@ -15,6 +15,9 @@
                     </div>
                 </div>
             </div>
+                        <a asp-action="JobApplication" asp-controller="JobPost" asp-route-id="@job.Id">
+                            @(job.JobApplications.Count()) aplikantów
+                        </a>
         }
     </div>
 </div>
