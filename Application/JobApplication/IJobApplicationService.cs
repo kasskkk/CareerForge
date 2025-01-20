@@ -14,6 +14,6 @@ namespace Application.JobApplication
         Task AddAsync(Domain.JobPost.JobApplication entity);
         Task UpdateAsync(Domain.JobPost.JobApplication entity);
         Task DeleteAsync(int id);
-        Task<IEnumerable<Domain.JobPost.JobApplication>> GetJobApplicationsByJobPostId(int id);
+        Task<IEnumerable<Domain.JobPost.JobApplication>> GetJobApplicationsByJobPostIdAsync(int id);
     }
 }

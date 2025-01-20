@@ -35,16 +35,17 @@ namespace Application.JobApplication
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<Domain.JobPost.JobApplication>> GetJobApplicationsByJobPostId(int id)
+        public async Task<IEnumerable<Domain.JobPost.JobApplication>> GetJobApplicationsByJobPostIdAsync(int id)
         {
             var jobApplications = await _repository.GetAllAsync();
-
-            return jobApplications.Where(ja => ja.JobPostId == id);
+            return jobApplications
+                .Where(ja => ja.JobPostId == id);
         }
 
         public Task UpdateAsync(Domain.JobPost.JobApplication entity)
         {
             throw new NotImplementedException();
         }
+
     }
 }
