@@ -19,16 +19,6 @@
 
 @if (User.IsInRole(Role.JOBSEEKER))
 {
-    @if (!ViewData.ModelState.IsValid)
-    {
-        <div class="alert alert-danger">
-            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
-            {
-                <p>@error.ErrorMessage</p>
-            }
-        </div>
-    }
-
     <form class="mb-2" method="post" asp-action="Apply" asp-controller="JobPost" asp-route-id="@Model.Id">
         <button class="btn btn-success" type="submit">APPLY NOW</button>
     </form>
