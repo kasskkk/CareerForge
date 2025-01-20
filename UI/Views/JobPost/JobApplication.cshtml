@@ -1,0 +1,6 @@
+﻿@model IEnumerable<Domain.JobPost.JobApplication>
+
+@foreach (var applicant in Model)
+{
+    <p>Current CV: <a href="@applicant.UserInfo.CVFilePath" target="_blank">Download CV</a></p>
+}
