@@ -20,19 +20,19 @@ namespace Application.JobApplication
             await _repository.AddAsync(entity);
         }
 
-        public Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            await _repository.DeleteAsync(id);
         }
 
-        public Task<IEnumerable<Domain.JobPost.JobApplication>> GetAllAsync()
+        public async Task<IEnumerable<Domain.JobPost.JobApplication>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            await _repository.GetAllAsync();
         }
 
-        public Task<Domain.JobPost.JobApplication> GetByIdAsync(int id)
+        public async Task<Domain.JobPost.JobApplication> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            await _repository.GetByIdAsync(id);
         }
 
         public async Task<IEnumerable<Domain.JobPost.JobApplication>> GetJobApplicationsByJobPostIdAsync(int id)
@@ -42,9 +42,9 @@ namespace Application.JobApplication
                 .Where(ja => ja.JobPostId == id);
         }
 
-        public Task UpdateAsync(Domain.JobPost.JobApplication entity)
+        public async Task UpdateAsync(Domain.JobPost.JobApplication entity)
         {
-            throw new NotImplementedException();
+            await _repository.UpdateAsync(entity);
         }
 
     }
