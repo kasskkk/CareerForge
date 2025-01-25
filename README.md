@@ -40,12 +40,25 @@ Dostępni seedowani użytkownicy:
 
 Upewnij się, że plik `appsettings.json` zawiera poprawne ustawienia połączenia z bazą danych:
 
+## Testy jednostkowe / Integracyjne
+
+Projekt zawiera przykłady testów jednostkowych / integracyjnych. Testy są zorganizowane w osobnym projekcie testowym.
+
+### Uruchamianie testów
+
+### Narzędzia i biblioteki
+
+Projekt testowy używa następujących narzędzi i bibliotek:
+
+- [xUnit](https://xunit.net/) - Framework do testów jednostkowych
+
 ## Struktura projektu
 
 - `Application/` - Logika aplikacji i serwisy
 - `Domain/` - Modele domenowe, interfejsy
 - `Infrastructure/` - Dostęp do danych i konfiguracja bazy danych
 - `UI/` - Warstwa prezentacji (kontrolery, widoki, viewModele)
+- `InfrastructureTests/` - Testy jednostkowe
 
 ## Przykładowe scenariusze użycia
 
