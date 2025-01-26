@@ -14,27 +14,18 @@ namespace Application.JobPost
     public class JobPostService : IJobPostService
     {
         private readonly IJobPostRepository _repository;
-        private readonly UserManager<IdentityUser> _userManager;
-        public JobPostService(IJobPostRepository repository, UserManager<IdentityUser> userManager)
+        public JobPostService(IJobPostRepository repository)
         {
             _repository = repository;
-            _userManager = userManager;
         }
         public async Task AddAsync(Domain.JobPost.JobPost entity)
         {
             await _repository.AddAsync(entity);
         }
 
-        public async Task DeleteAsync(int id, ClaimsPrincipal user)
+        public async Task DeleteAsync(int id)
         {
             var jobPost = await _repository.GetByIdAsync(id);
-
-            var userId = _userManager.GetUserId(user);
-
-            if (userId != jobPost.UserId && !user.IsInRole(Role.ADMIN))
-            {
-                throw new UnauthorizedAccessException();
-            }
 
             await _repository.DeleteAsync(id);
         }
@@ -63,9 +54,9 @@ namespace Application.JobPost
             await _repository.UpdateAsync(jobPost);
         }
 
-        public async Task<IEnumerable<Domain.JobPost.JobPost>> GetMyPosts(ClaimsPrincipal user)
+        public async Task<IEnumerable<Domain.JobPost.JobPost>> GetMyPosts(string _userId)
         {
-            var userId = _userManager.GetUserId(user);
+            var userId = _userId;
             var jobPosts = await _repository.GetAllAsync();
 
             if (jobPosts == null)
