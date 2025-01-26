@@ -27,12 +27,12 @@ namespace Application.JobApplication
 
         public async Task<IEnumerable<Domain.JobPost.JobApplication>> GetAllAsync()
         {
-            await _repository.GetAllAsync();
+            return await _repository.GetAllAsync();
         }
 
         public async Task<Domain.JobPost.JobApplication> GetByIdAsync(int id)
         {
-            await _repository.GetByIdAsync(id);
+            return await _repository.GetByIdAsync(id);
         }
 
         public async Task<IEnumerable<Domain.JobPost.JobApplication>> GetJobApplicationsByJobPostIdAsync(int id)
