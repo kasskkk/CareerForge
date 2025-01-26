@@ -102,7 +102,7 @@ namespace UI.Controllers
                 return Unauthorized("Unauthorized action");
             }
 
-            await _jobPostService.DeleteAsync(id, User);
+            await _jobPostService.DeleteAsync(id);
 
             if (User.IsInRole(Role.ADMIN))
             {
@@ -117,7 +117,9 @@ namespace UI.Controllers
         [Authorize(Roles = $"{Role.ADMIN},{Role.EMPLOYER}")]
         public async Task<IActionResult> MyOffers()
         {
-            var myJobPosts = await _jobPostService.GetMyPosts(User);
+            var userId = _userManager.GetUserId(User);
+
+            var myJobPosts = await _jobPostService.GetMyPosts(userId);
 
             if (myJobPosts == null)
             {
