@@ -54,7 +54,7 @@ namespace Application.JobPost
             await _repository.UpdateAsync(jobPost);
         }
 
-        public async Task<IEnumerable<Domain.JobPost.JobPost>> GetMyPosts(string _userId)
+        public async Task<IEnumerable<Domain.JobPost.JobPost>> GetMyPostsAsync(string _userId)
         {
             var userId = _userId;
             var jobPosts = await _repository.GetAllAsync();
@@ -69,7 +69,7 @@ namespace Application.JobPost
             return myPosts;
         }
 
-        public async Task<IEnumerable<Domain.JobPost.JobPost>> GetAllApproved()
+        public async Task<IEnumerable<Domain.JobPost.JobPost>> GetAllApprovedAsync()
         {
             var jobPosts = await _repository.GetAllAsync();
 
@@ -83,7 +83,7 @@ namespace Application.JobPost
             return approvedPosts;
         }
 
-        public async Task<IEnumerable<Domain.JobPost.JobPost>> GetAllUnapproved()
+        public async Task<IEnumerable<Domain.JobPost.JobPost>> GetAllUnapprovedAsync()
         {
             var jobPosts = await _repository.GetAllAsync();
 

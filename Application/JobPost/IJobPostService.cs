@@ -15,8 +15,8 @@ namespace Application.JobPost
         Task UpdateAsync(Domain.JobPost.JobPost entity);
         Task DeleteAsync(int id);
         Task ApproveAsync(int id);
-        Task<IEnumerable<Domain.JobPost.JobPost>> GetMyPosts(string userId);
-        Task<IEnumerable<Domain.JobPost.JobPost>> GetAllApproved();
-        Task<IEnumerable<Domain.JobPost.JobPost>> GetAllUnapproved();
+        Task<IEnumerable<Domain.JobPost.JobPost>> GetMyPostsAsync(string userId);
+        Task<IEnumerable<Domain.JobPost.JobPost>> GetAllApprovedAsync();
+        Task<IEnumerable<Domain.JobPost.JobPost>> GetAllUnapprovedAsync();
     }
 }
