@@ -31,7 +31,7 @@ namespace UI.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            var approvedJobPosts = await _jobPostService.GetAllApproved();
+            var approvedJobPosts = await _jobPostService.GetAllApprovedAsync();
 
             return View(approvedJobPosts);
         }
@@ -119,7 +119,7 @@ namespace UI.Controllers
         {
             var userId = _userManager.GetUserId(User);
 
-            var myJobPosts = await _jobPostService.GetMyPosts(userId);
+            var myJobPosts = await _jobPostService.GetMyPostsAsync(userId);
 
             if (myJobPosts == null)
             {
@@ -173,7 +173,7 @@ namespace UI.Controllers
         [Authorize(Roles = $"{Role.ADMIN}")]
         public async Task<IActionResult> Approve()
         {
-            var unapprovedPosts = await _jobPostService.GetAllUnapproved();
+            var unapprovedPosts = await _jobPostService.GetAllUnapprovedAsync();
 
             if (unapprovedPosts == null)
             {
